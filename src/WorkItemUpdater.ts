@@ -199,10 +199,20 @@ async function getBuildOrReleaseWorkItemsRefs(vstsWebApi: WebApi, settings: Sett
 
             const baseRelease = await releaseClient.getRelease(settings.projectId, baseReleaseId);
 
-            for (const currentArtifact of currentRelease.artifacts) {
-                const baseArtifact = baseRelease.artifacts.find((artifact) => { return artifact.sourceId === currentArtifact.sourceId; });
-
-                const releaseWorkItemRefs = await buildClient.getWorkItemsBetweenBuilds(settings.projectId, Number(baseArtifact.definitionReference.version.id), Number(currentArtifact.definitionReference.version.id), settings.workitemLimit);
+            if (currentRelease.artifacts.length > 1) {
+                for (const currentArtifact of currentRelease.artifacts) {
+                    const baseArtifact = baseRelease.artifacts.find((artifact) => { return artifact.sourceId === currentArtifact.sourceId; });
+                    if (!baseArtifact) {
+                        continue;
+                    }
+                    if (baseArtifact.definitionReference.version.id == null || currentArtifact.definitionReference.version.id == null) {
+                        continue;
+                    }
+                    const releaseWorkItemRefs = await buildClient.getWorkItemsBetweenBuilds(settings.projectId, Number(baseArtifact.definitionReference.version.id), Number(currentArtifact.definitionReference.version.id), settings.workitemLimit);
+                    pushWorkItemsRefs(workItemRefs, releaseWorkItemRefs);
+                }
+            } else {
+                const releaseWorkItemRefs = await releaseClient.getReleaseWorkItemsRefs(settings.projectId, settings.releaseId, baseReleaseId);
                 pushWorkItemsRefs(workItemRefs, releaseWorkItemRefs);
             }
         } else {
@@ -220,6 +230,10 @@ async function getBuildOrReleaseWorkItemsRefs(vstsWebApi: WebApi, settings: Sett
 }
 
 function pushWorkItemsRefs(workItemRefs: ResourceRef[], workItemRefsToAdd: ResourceRef[]) {
+    if (typeof workItemRefsToAdd == undefined) {
+        return;
+    }
+
     workItemRefsToAdd.forEach((workItemRef: ResourceRef) => {
         workItemRefs.push({
             id: workItemRef.id.toString(),
