@@ -1,14 +1,14 @@
 {
     "manifestVersion": 1,
-    "id": "bluebasher-workitemupdater",
-    "version": "2.3.766",
+    "id": "traserlkn-workitemupdater",
+    "version": "2.4.4",
     "name": "WorkItem Updater",
     "scopes": [
         "vso.work",
         "vso.work_write"
     ],
     "description": "Update the state of work items linked to a build.",
-    "publisher": "bluebasher",
+    "publisher": "traserlkn",
     "public": false,
     "icons": {
         "default": "marketplace/logo.png"
