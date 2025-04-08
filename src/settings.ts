@@ -1,16 +1,16 @@
 export class Settings {
     public buildId: number;
     public projectId: string;
-    public releaseId: number | null;
-    public definitionId: number | null;
-    public definitionEnvironmentId: number | null;
+    public releaseId: number | undefined;
+    public definitionId: number | undefined;
+    public definitionEnvironmentId: number | undefined;
     public requestedFor: string;
     public workitemsSource: string;
     public workitemsSourceQuery: string;
     public workItemType: string;
     public allWorkItemsSinceLastRelease: boolean;
     public workItemState: string;
-    public workitemLimit: number | null;
+    public workitemLimit: number | undefined;
     public workItemCurrentState: string;
     public workItemKanbanLane: string;
     public workItemKanbanState: string;

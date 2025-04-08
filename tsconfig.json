@@ -1,11 +1,21 @@
 {
-    "compilerOptions": {
-        "noImplicitAny": true,
-        "target": "es6",
-        "alwaysStrict": true,
-        "module": "commonjs"
-    },
-    "exclude": [
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "target": "ES2022",
+    "alwaysStrict": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": [
+      "ES2022"
+    ],
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "exclude": [
     "node_modules"
+  ],
+  "include": [
+    "src/**/*"
   ]
 }

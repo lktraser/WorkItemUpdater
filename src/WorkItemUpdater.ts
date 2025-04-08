@@ -1,15 +1,15 @@
-import tl = require('azure-pipelines-task-lib/task');
-import { Settings } from './settings';
-import * as moment from 'moment';
-import { IBuildApi } from 'azure-devops-node-api/BuildApi';
-import { IRequestHandler } from 'azure-devops-node-api/interfaces/common/VsoBaseInterfaces';
-import { WebApi, getHandlerFromToken } from 'azure-devops-node-api/WebApi';
-import { IWorkItemTrackingApi } from 'azure-devops-node-api/WorkItemTrackingApi';
-import { ResourceRef, JsonPatchOperation, Operation } from 'azure-devops-node-api/interfaces/common/VSSInterfaces';
-import { WorkItemExpand, WorkItem, WorkItemField, WorkItemRelation, QueryHierarchyItem, FieldType } from 'azure-devops-node-api/interfaces/WorkItemTrackingInterfaces';
-import { WorkItemQueryResult } from 'azure-devops-node-api/interfaces/WorkItemTrackingInterfaces';
-import { IReleaseApi } from 'azure-devops-node-api/ReleaseApi';
-import { DeploymentStatus, ReleaseQueryOrder } from 'azure-devops-node-api/interfaces/ReleaseInterfaces';
+import * as tl from 'azure-pipelines-task-lib/task.js';
+import { Settings } from './settings.js';
+import moment from 'moment';
+import { IBuildApi } from 'azure-devops-node-api/BuildApi.js';
+import { IRequestHandler } from 'azure-devops-node-api/interfaces/common/VsoBaseInterfaces.js';
+import { WebApi, getHandlerFromToken } from 'azure-devops-node-api/WebApi.js';
+import { IWorkItemTrackingApi } from 'azure-devops-node-api/WorkItemTrackingApi.js';
+import { ResourceRef, JsonPatchOperation, Operation } from 'azure-devops-node-api/interfaces/common/VSSInterfaces.js';
+import { WorkItemExpand, WorkItem, WorkItemField, WorkItemRelation, QueryHierarchyItem, FieldType } from 'azure-devops-node-api/interfaces/WorkItemTrackingInterfaces.js';
+import { WorkItemQueryResult } from 'azure-devops-node-api/interfaces/WorkItemTrackingInterfaces.js';
+import { IReleaseApi } from 'azure-devops-node-api/ReleaseApi.js';
+import { DeploymentStatus, ReleaseQueryOrder } from 'azure-devops-node-api/interfaces/ReleaseInterfaces.js';
 
 async function main(): Promise<void> {
     try {
@@ -205,7 +205,7 @@ async function getBuildOrReleaseWorkItemsRefs(vstsWebApi: WebApi, settings: Sett
                     if (!baseArtifact) {
                         continue;
                     }
-                    if (baseArtifact.definitionReference.version.id == null || currentArtifact.definitionReference.version.id == null) {
+                    if (baseArtifact.definitionReference.version.id === undefined || currentArtifact.definitionReference.version.id === undefined) {
                         continue;
                     }
                     const releaseWorkItemRefs = await buildClient.getWorkItemsBetweenBuilds(settings.projectId, Number(baseArtifact.definitionReference.version.id), Number(currentArtifact.definitionReference.version.id), settings.workitemLimit);
